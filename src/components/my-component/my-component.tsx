@@ -1,5 +1,5 @@
-import { Component, Prop, h } from '@stencil/core';
-import { format } from '../../utils/utils';
+import { Component, h } from '@stencil/core';
+import { createStore, Store } from 'redux';
 
 @Component({
   tag: 'my-component',
@@ -7,26 +7,27 @@ import { format } from '../../utils/utils';
   shadow: true
 })
 export class MyComponent {
-  /**
-   * The first name
-   */
-  @Prop() first: string;
+  store: Store;
 
-  /**
-   * The middle name
-   */
-  @Prop() middle: string;
+  todos = (state = [], action) => {
+    switch (action.type) {
+      case 'ADD_TODO':
+        return state.concat([action.text])
+      default:
+        return state
+    }
+  }
 
-  /**
-   * The last name
-   */
-  @Prop() last: string;
+  constructor() {
+    this.store = createStore(this.todos, ['Use Redux']);
 
-  private getText(): string {
-    return format(this.first, this.middle, this.last);
+    this.store.dispatch({
+      type: 'ADD_TODO',
+      text: 'Read the docs'
+    })
   }
 
   render() {
-    return <div>Hello, World! I'm {this.getText()}</div>;
+    return <div>{JSON.stringify(this.store.getState())}</div>;
   }
 }
