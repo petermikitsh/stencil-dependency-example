@@ -1,0 +1,1 @@
+System.register(["./p-4f40f05e.system.js"],(function(){"use strict";var t,e;return{setters:[function(n){t=n.p;e=n.b}],execute:function(){t().then((function(t){return e([["p-ojjzx7xa.system",[[1,"my-component"]]]],t)}))}}}));
